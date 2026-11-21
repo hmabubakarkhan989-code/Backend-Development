@@ -454,7 +454,7 @@ The tests use a temporary database, so your real data is never touched.
 3rd-semester BS Artificial Intelligence student, aiming for a career in backend engineering.
 
 - LinkedIn: [www.linkedin.com/in/abubakar-khan-ai]
-- GitHub: [https://github.com/hmabubakarkhan989-code/hmabubakarkhan989-code.git]
+- GitHub: [https://github.com/hmabubakarkhan989-code/]
 
 ---
 
