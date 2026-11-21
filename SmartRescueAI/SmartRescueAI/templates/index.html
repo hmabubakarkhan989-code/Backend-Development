@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartRescue AI | Emergency Response Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">+</div><div class="label"><b>SmartRescue AI</b><small>Emergency Response</small></div></div>
+    <nav>
+      <button class="nav-btn active" data-page="dashboard"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span class="label">Dashboard</span></button>
+      <button class="nav-btn" data-page="dispatch"><svg class="ic" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="label">Dispatch</span></button>
+      <button class="nav-btn" data-page="lab"><svg class="ic" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span class="label">Algorithm Lab</span></button>
+      <button class="nav-btn" data-page="incidents"><svg class="ic" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span class="label">Incidents</span></button>
+      <button class="nav-btn" data-page="resources"><svg class="ic" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="label">Resources</span></button>
+    </nav>
+    <div class="side-foot label"><span class="live-dot"></span>Live &middot; <span id="updated">--:--:--</span></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h1 id="page-title">Dashboard</h1>
+      <div class="top-actions"><span class="pill">Simulation mode</span><button id="theme" class="icon-btn" title="Toggle theme">&#9790;</button></div>
+    </header>
+
+    <div class="content">
+      <!-- DASHBOARD -->
+      <section class="page active" id="page-dashboard">
+        <div class="kpis" id="kpis"></div>
+        <div class="grid-2">
+          <div class="card"><h3>Emergencies by type</h3><div class="chart-box"><canvas id="chart-type"></canvas></div></div>
+          <div class="card"><h3>Algorithm usage</h3><div class="chart-box"><canvas id="chart-algo"></canvas></div></div>
+        </div>
+        <div class="card"><h3>Recent activity</h3><div id="activity"></div></div>
+      </section>
+
+      <!-- DISPATCH -->
+      <section class="page" id="page-dispatch">
+        <div class="split">
+          <div class="card map-card">
+            <div id="map-dispatch" class="map"></div>
+            <div class="legend">
+              <span><i class="dot amb"></i>Ambulance</span><span><i class="dot hosp"></i>Hospital</span>
+              <span><i class="dot inc"></i>Incident</span><span><i class="line blue"></i>To incident</span>
+              <span><i class="line green"></i>To hospital</span><span><i class="line red"></i>Blocked road</span>
+            </div>
+          </div>
+          <div class="side-col">
+            <div class="card">
+              <h3>Report emergency</h3>
+              <label>Emergency type<select id="etype"></select></label>
+              <label>Incident location<select id="location"></select></label>
+              <label>Search algorithm<select id="algo"></select></label>
+              <button id="dispatch" class="btn emergency">Dispatch ambulance</button>
+              <button id="random" class="btn ghost">Random emergency</button>
+              <p class="hint">Click a map node to set the location. Click a road to block or reopen it.</p>
+            </div>
+            <div class="card" id="result-card"><h3>Dispatch result</h3><p class="empty">No emergency dispatched yet.</p></div>
+            <div class="card"><h3>Algorithm comparison</h3><div id="comparison"><p class="empty">Run a dispatch to compare BFS, DFS, UCS and A*.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ALGORITHM LAB -->
+      <section class="page" id="page-lab">
+        <div class="split">
+          <div class="card map-card"><div id="map-lab" class="map"></div></div>
+          <div class="side-col">
+            <div class="card">
+              <h3>Search lab</h3>
+              <label>From<select id="lab-from"></select></label>
+              <label>To<select id="lab-to"></select></label>
+              <label>Algorithm to animate<select id="lab-algo"></select></label>
+              <label>Speed<select id="lab-speed"><option value="700">Slow</option><option value="400" selected>Normal</option><option value="150">Fast</option></select></label>
+              <button id="lab-run" class="btn">Run &amp; animate</button>
+              <p class="hint" id="lab-status">Click two map nodes (or use the menus), then run. Blocked roads are respected.</p>
+            </div>
+            <div class="card"><h3>All algorithms</h3><div id="lab-table"><p class="empty">Results appear here.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INCIDENTS -->
+      <section class="page" id="page-incidents">
+        <div class="card">
+          <div class="toolbar">
+            <input id="inc-search" type="search" placeholder="Search type, location, ambulance, hospital...">
+            <select id="inc-status"><option value="">All statuses</option><option>Active</option><option>Resolved</option></select>
+            <span id="inc-count" class="muted"></span>
+            <span class="spacer"></span>
+            <a class="btn ghost" href="/api/export.csv" download>Export CSV</a>
+            <button id="clear-all" class="btn danger">Clear all data</button>
+          </div>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>#</th><th>Time</th><th>Emergency</th><th>Location</th><th>Ambulance</th><th>Hospital</th><th>Algorithm</th><th>Cost</th><th>Status</th><th></th></tr></thead>
+            <tbody id="inc-body"></tbody>
+          </table></div>
+        </div>
+      </section>
+
+      <!-- RESOURCES -->
+      <section class="page" id="page-resources">
+        <div class="grid-3">
+          <div class="card"><h3>Ambulance fleet</h3><div id="res-fleet" class="stack"></div></div>
+          <div class="card"><h3>Hospitals</h3><div id="res-hosp" class="stack"></div></div>
+          <div class="card"><h3>Road closures</h3><div id="res-roads" class="stack"></div>
+            <button id="reset" class="btn ghost" style="margin-top:16px">Reset fleet, beds &amp; roads</button></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
