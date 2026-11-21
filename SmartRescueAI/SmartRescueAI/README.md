@@ -8,7 +8,7 @@
 ![Tests](https://img.shields.io/badge/tests-19%20passing-brightgreen)
 ![Status](https://img.shields.io/badge/type-simulation-orange)
 
-> ⚠️ **This is an educational simulation.** It uses sample data and approximate coordinates. It is **not** a real dispatch system and must not be used for real emergencies.
+>  **This is an educational simulation.** It uses sample data and approximate coordinates. It is **not** a real dispatch system and must not be used for real emergencies.
 
 ---
 
@@ -35,7 +35,7 @@
 
 ---
 
-## 📖 Overview
+## Overview
 
 When an emergency happens, a control room has to answer three questions quickly:
 
@@ -49,7 +49,7 @@ The project also lets you **compare the four algorithms on the same problem**, s
 
 ---
 
-## ✨ Features
+##  Features
 
 | Area | What you get |
 |---|---|
@@ -64,23 +64,7 @@ The project also lets you **compare the four algorithms on the same problem**, s
 | **Light and dark theme** | The choice is remembered by the browser |
 | **Tested** | 19 automated tests for the AI logic and the web API |
 
----
-
-## 🖼 Screenshots
-
-> Add your own screenshots to a `docs/screenshots/` folder and update the paths below.
-
-| Dashboard | Dispatch map |
-|---|---|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Dispatch](docs/screenshots/dispatch.png) |
-
-| Algorithm Lab | Incident records |
-|---|---|
-| ![Lab](docs/screenshots/lab.png) | ![Incidents](docs/screenshots/incidents.png) |
-
----
-
-## 🔧 How it works
+##  How it works
 
 ### The big picture
 
@@ -161,7 +145,7 @@ sequenceDiagram
 
 ---
 
-## 🧠 The AI explained
+##  The AI explained
 
 ### 1. The city is a graph
 
@@ -213,7 +197,7 @@ What this shows: BFS minimises the number of roads, not the cost. DFS can return
 
 ---
 
-## 🎯 Dispatch decision rules
+##  Dispatch decision rules
 
 **Choosing the ambulance** (`select_ambulance`)
 
@@ -267,7 +251,7 @@ SmartRescueAI/
 
 ---
 
-## 🛠 Tech stack
+## Tech stack
 
 | Layer | Technology |
 |---|---|
@@ -281,7 +265,7 @@ SmartRescueAI/
 
 ---
 
-## 🔌 API reference
+##  API reference
 
 All responses are JSON unless noted. Errors return `{"error": "message"}` with status **400** (bad input), **404** (not found) or **409** (conflict, for example no ambulance available).
 
@@ -405,7 +389,7 @@ Then open **http://127.0.0.1:5000** in your browser. Press `Ctrl + C` in the ter
 
 ---
 
-## ✅ Running the tests
+##  Running the tests
 
 ```bash
 python -m unittest discover tests -v
@@ -420,7 +404,7 @@ The tests use a temporary database, so your real data is never touched.
 
 ---
 
-## 🧩 Customising the project
+##  Customising the project
 
 | I want to... | Change this |
 |---|---|
@@ -433,7 +417,7 @@ The tests use a temporary database, so your real data is never touched.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - It is a **simulation** with sample data. Coordinates are approximate and the road network is simplified (15 places, 25 roads).
 - Traffic is a fixed number per road, not live traffic.
@@ -470,7 +454,7 @@ The tests use a temporary database, so your real data is never touched.
 3rd-semester BS Artificial Intelligence student, aiming for a career in backend engineering.
 
 - LinkedIn: [www.linkedin.com/in/abubakar-khan-ai]
-- GitHub: [your-github-link]
+- GitHub: [https://github.com/hmabubakarkhan989-code/hmabubakarkhan989-code.git]
 
 ---
 
